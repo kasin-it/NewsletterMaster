@@ -34,7 +34,9 @@ export default function Features() {
             <div className="pt-12 md:pt-20">
                {/* Section header */}
                <div className="mx-auto max-w-3xl pb-12 text-center md:pb-16">
-                  <h1 className="h2 mb-4">Explore the solutions</h1>
+                  <h1 className="h2 mb-4 text-5xl font-bold">
+                     Explore the solutions
+                  </h1>
                   <p className="text-xl text-gray-600">
                      Duis aute irure dolor in reprehenderit in voluptate velit
                      esse cillum dolore eu fugiat nulla pariatur excepteur sint
@@ -50,7 +52,9 @@ export default function Features() {
                      data-aos="fade-right"
                   >
                      <div className="mb-8 md:pr-4 lg:pr-12 xl:pr-16">
-                        <h3 className="h3 mb-3">Powerful suite of tools</h3>
+                        <h3 className="h3 mb-3 text-3xl font-bold">
+                           Powerful suite of tools
+                        </h3>
                         <p className="text-xl text-gray-600">
                            Duis aute irure dolor in reprehenderit in voluptate
                            velit esse cillum dolore pariatur. Excepteur sint

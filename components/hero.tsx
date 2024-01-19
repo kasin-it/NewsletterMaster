@@ -1,5 +1,5 @@
+import Image from "next/image"
 import Link from "next/link"
-import VideoThumb from "@/public/images/hero-image.png"
 
 import { cn } from "@/lib/utils"
 
@@ -47,10 +47,10 @@ export default function Hero() {
                {/* Section header */}
                <div className="pb-12 text-center md:pb-16">
                   <h1
-                     className="leading-tighter mb-4 text-5xl font-extrabold tracking-tighter md:text-6xl"
+                     className="leading-tighter mb-4 text-pretty text-5xl font-extrabold tracking-tighter md:text-8xl"
                      data-aos="zoom-y-out"
                   >
-                     Make your website{" "}
+                     Make your website <br />
                      <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
                         wonderful
                      </span>
@@ -73,7 +73,10 @@ export default function Hero() {
                         <div>
                            <Link
                               className={cn(
-                                 buttonVariants({ variant: "default" })
+                                 buttonVariants({
+                                    variant: "default",
+                                    size: "lg",
+                                 })
                               )}
                               href="#0"
                            >
@@ -83,7 +86,10 @@ export default function Hero() {
                         <div>
                            <Link
                               className={cn(
-                                 buttonVariants({ variant: "outline" })
+                                 buttonVariants({
+                                    variant: "outline",
+                                    size: "lg",
+                                 })
                               )}
                               href="#0"
                            >
@@ -104,7 +110,14 @@ export default function Hero() {
                   videoWidth={1920}
                   videoHeight={1080}
                /> */}
-               <Image src="/public/images/hero-image.png" alt="hero image" />
+               <div className="flex justify-center">
+                  <Image
+                     src="/images/hero-image.png"
+                     alt="hero image"
+                     width={768}
+                     height={432}
+                  />
+               </div>
             </div>
          </div>
       </section>
