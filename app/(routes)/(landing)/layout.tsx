@@ -1,10 +1,12 @@
-import LandingNavbar from "@/components/landing-navbar"
+import Footer from "@/components/footer"
+import Header from "@/components/header"
 
 function LandingPageLayout({ children }: { children: React.ReactNode }) {
    return (
       <>
-         <LandingNavbar />
+         <Header />
          {children}
+         <Footer />
       </>
    )
 }
