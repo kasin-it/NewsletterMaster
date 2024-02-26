@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-// import { Transition } from '@headlessui/react'
 import Image from "next/image"
 import Link from "next/link"
 import FeaturesBg from "@/public/images/features-bg.png"
 import FeaturesElement from "@/public/images/features-element.png"
+import { Transition } from "@headlessui/react"
 
 export default function Features() {
    const [tab, setTab] = useState<number>(1)
@@ -166,101 +166,101 @@ export default function Features() {
                            ref={tabs}
                         >
                            {/* Item 1 */}
-                           {/* <Transition
-                    show={tab === 1}
-                    appear={true}
-                    className="w-full"
-                    enter="transition ease-in-out duration-700 transform order-first"
-                    enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in-out duration-300 transform absolute"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-16"
-                    beforeEnter={() => heightFix()}
-                    unmount={false}                     
-                  > */}
-                           <div className="relative inline-flex flex-col">
-                              <Image
-                                 className="mx-auto rounded md:max-w-none"
-                                 src={FeaturesBg}
-                                 width={500}
-                                 height="462"
-                                 alt="Features bg"
-                              />
-                              <Image
-                                 className="animate-float absolute left-0 w-full transform md:max-w-none"
-                                 src={FeaturesElement}
-                                 width={500}
-                                 height="44"
-                                 alt="Element"
-                                 style={{ top: "30%" }}
-                              />
-                           </div>
-                           {/* </Transition> */}
+                           <Transition
+                              show={tab === 1}
+                              appear={true}
+                              className="w-full"
+                              enter="transition ease-in-out duration-700 transform order-first"
+                              enterFrom="opacity-0 translate-y-16"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in-out duration-300 transform absolute"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 -translate-y-16"
+                              beforeEnter={() => heightFix()}
+                              unmount={false}
+                           >
+                              <div className="relative inline-flex flex-col">
+                                 <Image
+                                    className="mx-auto rounded md:max-w-none"
+                                    src={FeaturesBg}
+                                    width={500}
+                                    height="462"
+                                    alt="Features bg"
+                                 />
+                                 <Image
+                                    className="animate-float absolute left-0 w-full transform md:max-w-none"
+                                    src={FeaturesElement}
+                                    width={500}
+                                    height="44"
+                                    alt="Element"
+                                    style={{ top: "30%" }}
+                                 />
+                              </div>
+                           </Transition>
                            {/* Item 2 */}
-                           {/* <Transition
-                    show={tab === 2}
-                    appear={true}
-                    className="w-full"
-                    enter="transition ease-in-out duration-700 transform order-first"
-                    enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in-out duration-300 transform absolute"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-16"
-                    beforeEnter={() => heightFix()}
-                    unmount={false}                     
-                  > */}
-                           <div className="relative inline-flex flex-col">
-                              <Image
-                                 className="mx-auto rounded md:max-w-none"
-                                 src={FeaturesBg}
-                                 width={500}
-                                 height="462"
-                                 alt="Features bg"
-                              />
-                              <Image
-                                 className="animate-float absolute left-0 w-full transform md:max-w-none"
-                                 src={FeaturesElement}
-                                 width={500}
-                                 height="44"
-                                 alt="Element"
-                                 style={{ top: "30%" }}
-                              />
-                           </div>
-                           {/* </Transition> */}
+                           <Transition
+                              show={tab === 2}
+                              appear={true}
+                              className="w-full"
+                              enter="transition ease-in-out duration-700 transform order-first"
+                              enterFrom="opacity-0 translate-y-16"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in-out duration-300 transform absolute"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 -translate-y-16"
+                              beforeEnter={() => heightFix()}
+                              unmount={false}
+                           >
+                              <div className="relative inline-flex flex-col">
+                                 <Image
+                                    className="mx-auto rounded md:max-w-none"
+                                    src={FeaturesBg}
+                                    width={500}
+                                    height="462"
+                                    alt="Features bg"
+                                 />
+                                 <Image
+                                    className="animate-float absolute left-0 w-full transform md:max-w-none"
+                                    src={FeaturesElement}
+                                    width={500}
+                                    height="44"
+                                    alt="Element"
+                                    style={{ top: "30%" }}
+                                 />
+                              </div>
+                           </Transition>
                            {/* Item 3 */}
-                           {/* <Transition
-                    show={tab === 3}
-                    appear={true}
-                    className="w-full"
-                    enter="transition ease-in-out duration-700 transform order-first"
-                    enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in-out duration-300 transform absolute"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-16"
-                    beforeEnter={() => heightFix()}
-                    unmount={false}                     
-                  > */}
-                           <div className="relative inline-flex flex-col">
-                              <Image
-                                 className="mx-auto rounded md:max-w-none"
-                                 src={FeaturesBg}
-                                 width={500}
-                                 height="462"
-                                 alt="Features bg"
-                              />
-                              <Image
-                                 className="animate-float absolute left-0 w-full transform md:max-w-none"
-                                 src={FeaturesElement}
-                                 width={500}
-                                 height="44"
-                                 alt="Element"
-                                 style={{ top: "30%" }}
-                              />
-                           </div>
-                           {/* </Transition> */}
+                           <Transition
+                              show={tab === 3}
+                              appear={true}
+                              className="w-full"
+                              enter="transition ease-in-out duration-700 transform order-first"
+                              enterFrom="opacity-0 translate-y-16"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in-out duration-300 transform absolute"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 -translate-y-16"
+                              beforeEnter={() => heightFix()}
+                              unmount={false}
+                           >
+                              <div className="relative inline-flex flex-col">
+                                 <Image
+                                    className="mx-auto rounded md:max-w-none"
+                                    src={FeaturesBg}
+                                    width={500}
+                                    height="462"
+                                    alt="Features bg"
+                                 />
+                                 <Image
+                                    className="animate-float absolute left-0 w-full transform md:max-w-none"
+                                    src={FeaturesElement}
+                                    width={500}
+                                    height="44"
+                                    alt="Element"
+                                    style={{ top: "30%" }}
+                                 />
+                              </div>
+                           </Transition>
                         </div>
                      </div>
                   </div>

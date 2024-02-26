@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createBrowserClient } from "@supabase/ssr"
-import { AlertTriangle } from "lucide-react"
+import { AlertTriangle, ArrowLeftCircle } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -83,6 +83,12 @@ export default function SignInPage() {
          <div className="flex h-full items-center lg:p-8">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
                <div className="flex flex-col space-y-2 text-left">
+                  <Link
+                     href="/"
+                     className="flex items-center gap-2 text-muted-foreground"
+                  >
+                     <ArrowLeftCircle className="size-4" /> Go back
+                  </Link>
                   <h1 className="text-2xl font-semibold tracking-tight">
                      Sign in to
                   </h1>

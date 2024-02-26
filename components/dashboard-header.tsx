@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { User } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
 import { buttonVariants } from "./ui/button"
 import Logo from "./ui/logo"
 
-export default function Header() {
+export default function DashboardHeader() {
    const [top, setTop] = useState<boolean>(true)
 
    // detect whether user has scrolled the page down by 10px
@@ -39,22 +40,14 @@ export default function Header() {
                   <ul className="flex grow flex-wrap items-center justify-end gap-2">
                      <li>
                         <Link
-                           href="/auth/sign-in"
+                           href="/dashboard/account"
                            className={cn(
-                              buttonVariants({ variant: "default" })
+                              buttonVariants({ variant: "default" }),
+                              "gap-2"
                            )}
                         >
-                           <span>Sign up</span>
-                           <svg
-                              className="-mr-1 ml-2 h-3 w-3 shrink-0 fill-current text-gray-400"
-                              viewBox="0 0 12 12"
-                              xmlns="http://www.w3.org/2000/svg"
-                           >
-                              <path
-                                 d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z"
-                                 fillRule="nonzero"
-                              />
-                           </svg>
+                           My Account
+                           <User className="size-5" />
                         </Link>
                      </li>
                   </ul>

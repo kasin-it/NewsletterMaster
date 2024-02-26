@@ -1,3 +1,6 @@
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+
 export default function Newsletter() {
    return (
       <section>
@@ -115,18 +118,15 @@ export default function Newsletter() {
                         {/* CTA form */}
                         <form className="w-full lg:w-auto">
                            <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-md sm:flex-row lg:mx-0">
-                              <input
+                              <Input
                                  type="email"
                                  className="form-input mb-2 w-full appearance-none rounded-sm border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-gray-600 sm:mb-0 sm:mr-2"
                                  placeholder="Your email…"
                                  aria-label="Your email…"
                               />
-                              <a
-                                 className="btn bg-blue-600 text-white shadow hover:bg-blue-700"
-                                 href="#0"
-                              >
+                              <Button className="btn bg-blue-600 text-white shadow hover:bg-blue-700">
                                  Subscribe
-                              </a>
+                              </Button>
                            </div>
                            {/* Success message */}
                            {/* <p className="text-sm text-gray-400 mt-3">Thanks for subscribing!</p> */}

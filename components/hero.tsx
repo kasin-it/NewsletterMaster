@@ -50,9 +50,9 @@ export default function Hero() {
                      className="leading-tighter mb-4 text-pretty text-5xl font-extrabold tracking-tighter md:text-8xl"
                      data-aos="zoom-y-out"
                   >
-                     Make your website <br />
+                     Create Your Own{" "}
                      <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
-                        wonderful
+                        Newsletter API Endpoint
                      </span>
                   </h1>
                   <div className="mx-auto max-w-3xl">
@@ -61,9 +61,8 @@ export default function Hero() {
                         data-aos="zoom-y-out"
                         data-aos-delay="150"
                      >
-                        Our landing page template works on all devices, so you
-                        only have to set it up once, and get beautiful results
-                        forever.
+                        Simplify your newsletter sign-ups with our powerful and
+                        customizable API endpoints. No coding required.
                      </p>
                      <div
                         className="mx-auto max-w-xs gap-4 sm:flex sm:max-w-none sm:justify-center"
@@ -78,9 +77,9 @@ export default function Hero() {
                                     size: "lg",
                                  })
                               )}
-                              href="#0"
+                              href="#pricing"
                            >
-                              Start free trial
+                              Get Started Today
                            </Link>
                         </div>
                         <div>
@@ -91,9 +90,9 @@ export default function Hero() {
                                     size: "lg",
                                  })
                               )}
-                              href="#0"
+                              href="#features"
                            >
-                              Learn more
+                              Learn More
                            </Link>
                         </div>
                      </div>
