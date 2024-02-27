@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { deleteEmailList } from "@/actions/delete-email-list"
-import { Trash2 } from "lucide-react"
+import { Loader2, Trash2 } from "lucide-react"
+import { useFormState, useFormStatus } from "react-dom"
 
 import {
    AlertDialog,
@@ -22,21 +23,48 @@ interface DeleteEmailListButtonProps {
    emailListName: string
 }
 
+const initialState = {
+   id: "",
+   message: "",
+}
+
 function DeleteEmailListButton({
    emailListId,
    emailListName,
 }: DeleteEmailListButtonProps) {
    const [isMounted, setIsMounted] = useState(false)
+   const [state, formAction] = useFormState(deleteEmailList, initialState)
 
    useEffect(() => {
       setIsMounted(true)
    }, [])
+
+   if (state.message != "") {
+      console.log(state.message)
+   }
 
    if (!isMounted) {
       return (
          <Button size={"icon"} className="size-8" variant={"destructive"}>
             <Trash2 className="size-5" />
          </Button>
+      )
+   }
+
+   const FormFields = () => {
+      const { pending } = useFormStatus()
+      return (
+         <>
+            <Input
+               value={emailListId}
+               name="id"
+               className="hidden"
+               disabled={pending}
+            />
+            <Button disabled={pending} variant={"destructive"}>
+               {pending ? <Loader2 className="animate-spin" /> : <>Continue</>}
+            </Button>
+         </>
       )
    }
 
@@ -61,9 +89,8 @@ function DeleteEmailListButton({
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel>Cancel</AlertDialogCancel>
-               <form action={deleteEmailList}>
-                  <Input value={emailListId} name="id" className="hidden" />
-                  <Button variant={"destructive"}>Continue</Button>
+               <form action={formAction} method="post">
+                  <FormFields />
                </form>
             </AlertDialogFooter>
          </AlertDialogContent>

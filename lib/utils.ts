@@ -10,3 +10,7 @@ export function formatDate(date: string) {
    const formatter = new Intl.DateTimeFormat("en", { dateStyle: "long" })
    return formatter.format(new_date)
 }
+
+export function copyToClipboard(value: string) {
+   navigator.clipboard.writeText(value)
+}

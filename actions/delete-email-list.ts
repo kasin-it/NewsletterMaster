@@ -9,7 +9,7 @@ const schema = z.object({
    id: z.string(),
 })
 
-export async function deleteEmailList(formData: FormData) {
+export async function deleteEmailList(prevState: any, formData: FormData) {
    const id = formData.get("id")
 
    const validatedFields = schema.safeParse({
