@@ -4,11 +4,12 @@ import Link from "next/link"
 import { deleteEmailList } from "@/actions/delete-email-list"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, Trash2 } from "lucide-react"
-import { useFormState, useFormStatus } from "react-dom"
 
 import { cn, formatDate } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { useOptimistic } from "react"
+import { Input } from "@/components/ui/input"
+
+import DeleteEmailListButton from "./delete-email-list-button"
 
 export type EmailListItem = {
    id: string
@@ -29,29 +30,8 @@ export const columns: ColumnDef<EmailListItem>[] = [
                href={`/dashboard/${emailListItem.id}`}
                className={cn(buttonVariants({ variant: "default" }))}
             >
-               Go to Email List
+               Navigate to Email List
             </Link>
-            // <DropdownMenu>
-            //    <DropdownMenuTrigger asChild>
-            //       <Button variant="ghost" className="h-8 w-8 p-0">
-            //          <span className="sr-only">Open menu</span>
-            //          <MoreHorizontal className="h-4 w-4" />
-            //       </Button>
-            //    </DropdownMenuTrigger>
-            //    <DropdownMenuContent align="end">
-            //       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            //       <DropdownMenuItem
-            //          onClick={() =>
-            //             navigator.clipboard.writeText(emailListItem.id)
-            //          }
-            //       >
-            //          Copy payment ID
-            //       </DropdownMenuItem>
-            //       <DropdownMenuSeparator />
-            //       <DropdownMenuItem>View customer</DropdownMenuItem>
-            //       <DropdownMenuItem>View payment details</DropdownMenuItem>
-            //    </DropdownMenuContent>
-            // </DropdownMenu>
          )
       },
    },
@@ -130,21 +110,16 @@ export const columns: ColumnDef<EmailListItem>[] = [
       },
    },
    {
-      id: "delete",
+      id: "actions",
       cell: ({ row }) => {
          const emailListItem = row.original
-     
-
-         const [optimisticMessages, addOptimisticMessage] = useOptimistic<Message[]>(
 
          return (
-            <form action={deleteEmailList}>
-               <Button size={"icon"} variant={"destructive"}>
-                  <Trash2 className="size-5" />
-               </Button>
-            </form>
+            <DeleteEmailListButton
+               emailListId={emailListItem.id}
+               emailListName={emailListItem.list_name}
+            />
          )
       },
-      header: "Delete",
    },
 ]

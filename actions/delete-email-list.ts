@@ -1,6 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
@@ -10,7 +9,7 @@ const schema = z.object({
    id: z.string(),
 })
 
-export async function deleteEmailList(prevState: any, formData: FormData) {
+export async function deleteEmailList(formData: FormData) {
    const id = formData.get("id")
 
    const validatedFields = schema.safeParse({
