@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { deleteEmailList } from "@/actions/delete-email-list"
+import { deleteUser } from "@/actions/delete-user"
 import { Loader2, Trash2 } from "lucide-react"
 import { useFormState, useFormStatus } from "react-dom"
 
@@ -18,22 +18,21 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-interface DeleteEmailListButtonProps {
-   emailListId: string
-   emailListName: string
+interface DeleteUserButtonProps {
+   userId: string
+   userName: string
+   listId: string
 }
 
 const initialState = {
    id: "",
+   listId: "",
    message: "",
 }
 
-function DeleteEmailListButton({
-   emailListId,
-   emailListName,
-}: DeleteEmailListButtonProps) {
+function DeleteUserButton({ userId, userName, listId }: DeleteUserButtonProps) {
    const [isMounted, setIsMounted] = useState(false)
-   const [state, formAction] = useFormState(deleteEmailList, initialState)
+   const [state, formAction] = useFormState(deleteUser, initialState)
 
    useEffect(() => {
       setIsMounted(true)
@@ -56,10 +55,16 @@ function DeleteEmailListButton({
       return (
          <>
             <Input
-               value={emailListId}
+               value={userId}
                name="id"
                className="aria-hidden hidden"
-               disabled={true}
+               disabled={pending}
+            />
+            <Input
+               value={listId}
+               name="listId"
+               className="aria-hidden hidden"
+               disabled={pending}
             />
             <Button disabled={pending} variant={"destructive"}>
                {pending ? <Loader2 className="animate-spin" /> : <>Continue</>}
@@ -79,12 +84,9 @@ function DeleteEmailListButton({
             <AlertDialogHeader>
                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your{" "}
-                  <span className="text-black">
-                     &apos;{emailListName}&apos;{" "}
-                  </span>
-                  and remove all its data from our servers.
+                  This action cannot be undone. This will permanently delete{" "}
+                  <span className="text-black">&apos;{userName}&apos; </span>
+                  from the list.
                </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -97,4 +99,4 @@ function DeleteEmailListButton({
       </AlertDialog>
    )
 }
-export default DeleteEmailListButton
+export default DeleteUserButton
