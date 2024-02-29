@@ -2,7 +2,7 @@ import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
 
-import SideBar from "./_components/sidebar"
+import Sidebar from "./_components/sidebar"
 
 async function ListNameLayout({
    children,
@@ -27,7 +27,7 @@ async function ListNameLayout({
 
    const { data, error } = await supabase
       .from("email_lists")
-      .select("list_name")
+      .select("list_name, id")
       .eq("id", list_id)
 
    if (!data) {
@@ -45,8 +45,8 @@ async function ListNameLayout({
                List Control ({data[0].list_name})
             </h1>
          </div>
-         <div className="flex">
-            <SideBar />
+         <div className="flex gap-5">
+            <Sidebar listName={data[0].list_name} listId={data[0].id} />
             {children}
          </div>
       </main>
