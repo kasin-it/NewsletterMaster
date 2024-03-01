@@ -62,10 +62,10 @@ export function UsersTable<TData, TValue>({
                onChange={(event) =>
                   table.getColumn("email")?.setFilterValue(event.target.value)
                }
-               className="max-w-sm"
+               className="max-w-sm bg-white"
             />
          </div>
-         <div className="rounded-md border">
+         <div className="rounded-md border bg-white">
             <Table>
                <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (

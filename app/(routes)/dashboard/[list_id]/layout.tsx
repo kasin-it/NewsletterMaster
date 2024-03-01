@@ -1,6 +1,10 @@
 import { cookies } from "next/headers"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
+import { ArrowLeftCircle } from "lucide-react"
+
+import { Separator } from "@/components/ui/separator"
 
 import Sidebar from "./_components/sidebar"
 
@@ -41,11 +45,20 @@ async function ListNameLayout({
    return (
       <main className="container flex max-w-6xl flex-col gap-10 pt-40">
          <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-bold">
-               List Control ({data[0].list_name})
-            </h1>
+            <div className="flex flex-col gap-4">
+               <Link
+                  href={"/dashboard"}
+                  className="flex items-center gap-2 text-muted-foreground"
+               >
+                  <ArrowLeftCircle strokeWidth={1.3} /> Go back to lists
+               </Link>
+               <h1 className="text-3xl font-bold">
+                  List Control ({data[0].list_name})
+               </h1>
+               <Separator />
+            </div>
          </div>
-         <div className="flex gap-5">
+         <div className="flex gap-8">
             <Sidebar listName={data[0].list_name} listId={data[0].id} />
             {children}
          </div>

@@ -2,7 +2,10 @@ import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
 
+import { Separator } from "@/components/ui/separator"
+
 import { columns } from "./_components/columns"
+import SubscribersChart from "./_components/subscribers-chart"
 import { UsersTable } from "./_components/users_table"
 
 interface ListNamePageProps {
@@ -39,6 +42,18 @@ async function ListNamePage({ params: { list_id } }: ListNamePageProps) {
       console.log(error)
    }
 
-   return <UsersTable columns={columns} data={data} />
+   return (
+      <main className="flex flex-col gap-5 pb-5">
+         <div className="flex flex-col gap-1">
+            <h1 className="text-lg font-semibold">List subscribers</h1>
+            <p className="text-sm text-muted-foreground">
+               Use this endpoint in your form to signup them to your newsletter
+            </p>
+         </div>
+         <Separator />
+         <SubscribersChart />
+         <UsersTable columns={columns} data={data} />
+      </main>
+   )
 }
 export default ListNamePage

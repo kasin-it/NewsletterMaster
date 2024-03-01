@@ -1,7 +1,5 @@
 "use client"
 
-import { ClipboardIcon } from "lucide-react"
-
 import { copyToClipboard } from "@/lib/utils"
 
 import { Button } from "./button"
@@ -23,8 +21,8 @@ function CopyToClipboardButton({ value }: CopyToClipboardButtonProps) {
    }
 
    return (
-      <Button variant={"outline"} size={"icon"} onClick={handleClick}>
-         <ClipboardIcon />
+      <Button size={"sm"} onClick={handleClick}>
+         Copy
       </Button>
    )
 }

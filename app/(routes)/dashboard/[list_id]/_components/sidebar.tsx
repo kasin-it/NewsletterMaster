@@ -14,7 +14,7 @@ interface SidebarProps {
 function Sidebar({ listName, listId }: SidebarProps) {
    const items = [
       {
-         label: "List users",
+         label: "List subscribers",
          href: `/dashboard/${listId}`,
       },
       {
@@ -29,7 +29,7 @@ function Sidebar({ listName, listId }: SidebarProps) {
    const pathname = usePathname()
 
    return (
-      <nav className={"flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1"}>
+      <nav className={"flex flex-col gap-2"}>
          {items.map((item) => (
             <Link
                key={item.href}
@@ -39,7 +39,7 @@ function Sidebar({ listName, listId }: SidebarProps) {
                   pathname === item.href
                      ? "bg-primary text-white hover:bg-primary hover:text-white"
                      : "hover:bg-transparent hover:underline",
-                  "justify-start"
+                  "w-[200px] justify-start"
                )}
             >
                {item.label}
