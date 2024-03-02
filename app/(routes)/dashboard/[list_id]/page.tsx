@@ -33,6 +33,7 @@ async function ListNamePage({ params: { list_id } }: ListNamePageProps) {
       .from("email_list_users")
       .select("id, name, email, created_at, email_list_id")
       .eq("email_list_id", list_id)
+      .order("created_at", { ascending: true })
 
    if (!data) {
       notFound()

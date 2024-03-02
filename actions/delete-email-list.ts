@@ -3,25 +3,8 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
-import { z } from "zod"
 
-const schema = z.object({
-   id: z.string(),
-})
-
-export async function deleteEmailList(prevState: any, formData: FormData) {
-   const id = formData.get("id")
-
-   const validatedFields = schema.safeParse({
-      id,
-   })
-
-   if (!validatedFields.success) {
-      return {
-         message: validatedFields.error.errors[0].message,
-      }
-   }
-
+export async function deleteEmailList({ id }: { id: string }) {
    const cookieStore = cookies()
 
    const supabase = createServerClient(
@@ -38,11 +21,5 @@ export async function deleteEmailList(prevState: any, formData: FormData) {
 
    const { error } = await supabase.from("email_lists").delete().eq("id", id)
 
-   if (error != null) {
-      return {
-         message: "Something went wrong, try again later",
-      }
-   }
-
-   redirect("/")
+   redirect("/dashboard/")
 }

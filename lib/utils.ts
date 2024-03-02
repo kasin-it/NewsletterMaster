@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
-import { differenceInCalendarMonths } from "date-fns"
+import { differenceInCalendarMonths, previousDay } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -22,6 +22,7 @@ export function formatCreatedAtToFullTime(data: { created_at: string }[]) {
    data.forEach((item) => {
       const entryDate = new Date(item.created_at)
       const entryYear = entryDate.getFullYear().toString()
+
       fullTimeMap.set(entryYear, (fullTimeMap.get(entryYear) || 0) + 1)
    })
 
@@ -37,9 +38,13 @@ export function formatCreatedAtToFullTime(data: { created_at: string }[]) {
       })
       .map(({ x, y }) => {
          const date = new Date(x)
+
+         const previousYearValue =
+            fullTimeMap.get((date.getFullYear() - 1).toString()) || 0
+
          return {
             x: date.getFullYear().toString(),
-            y,
+            y: y + previousYearValue,
          }
       })
 
@@ -55,6 +60,7 @@ export function formatHourlyComparisonToToday(data: { created_at: string }[]) {
 
    data.forEach((entry) => {
       const entryDate = new Date(entry.created_at)
+
       if (
          entryDate.getMonth() == currentMonth &&
          entryDate.getFullYear() == currentYear &&
@@ -65,10 +71,16 @@ export function formatHourlyComparisonToToday(data: { created_at: string }[]) {
       }
    })
 
-   const result = Object.entries(hourlyData).map(([hourStr, y]) => ({
-      x: hourStr,
-      y: y,
-   }))
+   const result = Object.entries(hourlyData).map(([hourStr, y]) => {
+      const prev = parseInt(hourStr) - 1
+
+      const previousDayValue = hourlyData[prev] || 0
+
+      return {
+         x: hourStr,
+         y: y + previousDayValue,
+      }
+   })
 
    return result
 }
@@ -80,6 +92,7 @@ export function formatAnnuallyByMonth(data: { created_at: string }[]) {
    data.forEach((entry) => {
       const entryDate = new Date(entry.created_at)
       if (entryDate.getFullYear() == localYear) {
+         entryDate.getMonth()
          yearlyData[entryDate.getMonth() + 1] =
             (yearlyData[entryDate.getMonth()] || 0) + 1
       }
@@ -89,7 +102,9 @@ export function formatAnnuallyByMonth(data: { created_at: string }[]) {
       .filter((monthKey) => !Number.isNaN(parseInt(monthKey)))
       .map((monthKey) => ({
          x: monthKey,
-         y: yearlyData[parseInt(monthKey)],
+         y:
+            yearlyData[parseInt(monthKey)] +
+            (yearlyData[parseInt(monthKey) - 1] || 0),
       }))
 
    return result
@@ -108,8 +123,8 @@ export function formatCurrentMonthByDay(data: { created_at: string }[]) {
          entryDate.getFullYear() == currentYear &&
          entryDate.getMonth() == currentMonth
       ) {
-         const day = entryDate.getUTCDate()
-         dailyData[day] = (dailyData[day] || 0) + 1
+         const day = entryDate.getDate()
+         dailyData[day] = (dailyData[day] || 0) + 1 + (dailyData[day - 1] || 0)
       }
    })
 
@@ -117,7 +132,9 @@ export function formatCurrentMonthByDay(data: { created_at: string }[]) {
       .filter((dayKey) => !Number.isNaN(parseInt(dayKey)))
       .map((dayKey) => ({
          x: dayKey,
-         y: dailyData[parseInt(dayKey)],
+         y:
+            dailyData[parseInt(dayKey)] +
+            (dailyData[parseInt(dayKey) - 1] || 0),
       }))
 
    return result

@@ -121,7 +121,11 @@ export const columns: ColumnDef<EmailListItem>[] = [
             <DeleteEmailListButton
                emailListId={emailListItem.id}
                emailListName={emailListItem.list_name}
-            />
+            >
+               <Button size={"icon"} className="size-8" variant={"destructive"}>
+                  <Trash2 className="size-5" />
+               </Button>
+            </DeleteEmailListButton>
          )
       },
    },

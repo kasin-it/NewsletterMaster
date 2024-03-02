@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { deleteUser } from "@/actions/delete-user"
-import { Loader2, Trash2 } from "lucide-react"
-import { useFormState, useFormStatus } from "react-dom"
+import { Trash2 } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import {
    AlertDialog,
+   AlertDialogAction,
    AlertDialogCancel,
    AlertDialogContent,
    AlertDialogDescription,
@@ -15,8 +16,7 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 interface DeleteUserButtonProps {
    userId: string
@@ -24,52 +24,19 @@ interface DeleteUserButtonProps {
    listId: string
 }
 
-const initialState = {
-   id: "",
-   listId: "",
-   message: "",
-}
-
 function DeleteUserButton({ userId, userName, listId }: DeleteUserButtonProps) {
    const [isMounted, setIsMounted] = useState(false)
-   const [state, formAction] = useFormState(deleteUser, initialState)
+   const [isPending, startTransition] = useTransition()
 
    useEffect(() => {
       setIsMounted(true)
    }, [])
-
-   if (state?.message != "") {
-      console.log(state?.message)
-   }
 
    if (!isMounted) {
       return (
          <Button size={"icon"} className="size-8" variant={"destructive"}>
             <Trash2 className="size-5" />
          </Button>
-      )
-   }
-
-   const FormFields = () => {
-      const { pending } = useFormStatus()
-      return (
-         <>
-            <Input
-               value={userId}
-               name="id"
-               className="aria-hidden hidden"
-               disabled={pending}
-            />
-            <Input
-               value={listId}
-               name="listId"
-               className="aria-hidden hidden"
-               disabled={pending}
-            />
-            <Button disabled={pending} variant={"destructive"}>
-               {pending ? <Loader2 className="animate-spin" /> : <>Continue</>}
-            </Button>
-         </>
       )
    }
 
@@ -91,9 +58,14 @@ function DeleteUserButton({ userId, userName, listId }: DeleteUserButtonProps) {
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel>Cancel</AlertDialogCancel>
-               <form action={formAction} method="post">
-                  <FormFields />
-               </form>
+               <AlertDialogAction
+                  className={cn(buttonVariants({ variant: "destructive" }))}
+                  onClick={() =>
+                     startTransition(() => deleteUser({ listId, userId }))
+                  }
+               >
+                  Continue
+               </AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>

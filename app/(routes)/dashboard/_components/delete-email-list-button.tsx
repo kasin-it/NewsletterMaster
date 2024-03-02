@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { deleteEmailList } from "@/actions/delete-email-list"
 import { Loader2, Trash2 } from "lucide-react"
-import { useFormState, useFormStatus } from "react-dom"
 
+import { cn } from "@/lib/utils"
 import {
    AlertDialog,
+   AlertDialogAction,
    AlertDialogCancel,
    AlertDialogContent,
    AlertDialogDescription,
@@ -15,33 +16,25 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 interface DeleteEmailListButtonProps {
    emailListId: string
-   emailListName: string
-}
-
-const initialState = {
-   id: "",
-   message: "",
+   emailListName?: string
+   children: React.ReactNode
 }
 
 function DeleteEmailListButton({
    emailListId,
    emailListName,
+   children,
 }: DeleteEmailListButtonProps) {
    const [isMounted, setIsMounted] = useState(false)
-   const [state, formAction] = useFormState(deleteEmailList, initialState)
+   const [isPending, startTransition] = useTransition()
 
    useEffect(() => {
       setIsMounted(true)
    }, [])
-
-   if (state?.message != "") {
-      console.log(state.message)
-   }
 
    if (!isMounted) {
       return (
@@ -51,47 +44,35 @@ function DeleteEmailListButton({
       )
    }
 
-   const FormFields = () => {
-      const { pending } = useFormStatus()
-      return (
-         <>
-            <Input
-               value={emailListId}
-               name="id"
-               className="aria-hidden hidden"
-               disabled={true}
-            />
-            <Button disabled={pending} variant={"destructive"}>
-               {pending ? <Loader2 className="animate-spin" /> : <>Continue</>}
-            </Button>
-         </>
-      )
-   }
-
    return (
       <AlertDialog>
-         <AlertDialogTrigger>
-            <Button size={"icon"} className="size-8" variant={"destructive"}>
-               <Trash2 className="size-5" />
-            </Button>
-         </AlertDialogTrigger>
+         <AlertDialogTrigger>{children}</AlertDialogTrigger>
          <AlertDialogContent>
             <AlertDialogHeader>
                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your{" "}
-                  <span className="text-black">
-                     &apos;{emailListName}&apos;{" "}
-                  </span>
-                  and remove all its data from our servers.
+                  This action cannot be undone.
+                  {emailListName ? (
+                     <>
+                        This will permanently delete your{" "}
+                        <span className="text-black">
+                           &apos;{emailListName}&apos;{" "}
+                        </span>
+                        and remove all its data from our servers.
+                     </>
+                  ) : null}
                </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel>Cancel</AlertDialogCancel>
-               <form action={formAction} method="post">
-                  <FormFields />
-               </form>
+               <AlertDialogAction
+                  className={cn(buttonVariants({ variant: "destructive" }))}
+                  onClick={() =>
+                     startTransition(() => deleteEmailList({ id: emailListId }))
+                  }
+               >
+                  Countinue
+               </AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>

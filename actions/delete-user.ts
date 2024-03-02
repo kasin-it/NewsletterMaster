@@ -1,29 +1,26 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
 import { z } from "zod"
 
 const schema = z.object({
-   id: z.string(),
+   userId: z.string(),
    listId: z.string(),
 })
 
-export async function deleteUser(prevState: any, formData: FormData) {
-   const id = formData.get("id")
-   const listId = formData.get("listId")
-
+export async function deleteUser({
+   listId,
+   userId,
+}: {
+   listId: string
+   userId: string
+}) {
    const validatedFields = schema.safeParse({
-      id,
+      userId,
       listId,
    })
-
-   if (!validatedFields.success) {
-      return {
-         message: validatedFields.error.errors[0].message,
-      }
-   }
 
    const cookieStore = cookies()
 
@@ -42,13 +39,11 @@ export async function deleteUser(prevState: any, formData: FormData) {
    const { error } = await supabase
       .from("email_list_users")
       .delete()
-      .eq("id", id)
+      .eq("id", userId)
 
    if (error != null) {
-      return {
-         message: "Something went wrong, try again later",
-      }
+      console.log(error)
    }
 
-   redirect(`/dashboard/${listId}`)
+   revalidatePath(`/dashboard/${listId}`)
 }
