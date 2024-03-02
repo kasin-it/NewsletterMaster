@@ -50,7 +50,7 @@ async function ListNameLayout({
                   href={"/dashboard"}
                   className="flex items-center gap-2 text-muted-foreground"
                >
-                  <ArrowLeftCircle strokeWidth={1.3} /> Go back to lists
+                  <ArrowLeftCircle strokeWidth={1.3} /> Go back dashboard
                </Link>
                <h1 className="text-3xl font-bold">
                   List Control ({data[0].list_name})
