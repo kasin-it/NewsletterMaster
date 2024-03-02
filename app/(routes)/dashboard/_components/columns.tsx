@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { deleteEmailList } from "@/actions/delete-email-list"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Trash2 } from "lucide-react"
+import { ArrowUpDown, FolderOpen, Trash2 } from "lucide-react"
 
 import { cn, formatDate } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -22,15 +22,18 @@ export type EmailListItem = {
 export const columns: ColumnDef<EmailListItem>[] = [
    {
       id: "navigate",
+      header: "Open",
       cell: ({ row }) => {
          const emailListItem = row.original
 
          return (
             <Link
                href={`/dashboard/${emailListItem.id}`}
-               className={cn(buttonVariants({ variant: "default" }))}
+               className={cn(
+                  buttonVariants({ variant: "default", size: "sm" })
+               )}
             >
-               Navigate to Email List
+               <FolderOpen />
             </Link>
          )
       },

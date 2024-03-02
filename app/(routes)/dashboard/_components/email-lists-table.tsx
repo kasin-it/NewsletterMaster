@@ -65,10 +65,10 @@ export function EmailListsTable<TData, TValue>({
                      .getColumn("list_name")
                      ?.setFilterValue(event.target.value)
                }
-               className="max-w-sm"
+               className="max-w-sm bg-white"
             />
          </div>
-         <div className="rounded-md border">
+         <div className="rounded-md border bg-white">
             <Table>
                <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (

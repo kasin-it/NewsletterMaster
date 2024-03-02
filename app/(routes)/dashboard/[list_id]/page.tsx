@@ -51,7 +51,7 @@ async function ListNamePage({ params: { list_id } }: ListNamePageProps) {
             </p>
          </div>
          <Separator />
-         <SubscribersChart />
+         <SubscribersChart data={data} />
          <UsersTable columns={columns} data={data} />
       </main>
    )

@@ -14,7 +14,7 @@ interface SidebarProps {
 function Sidebar({ listName, listId }: SidebarProps) {
    const items = [
       {
-         label: "List subscribers",
+         label: "Subscribers",
          href: `/dashboard/${listId}`,
       },
       {

@@ -39,7 +39,7 @@ function DeleteUserButton({ userId, userName, listId }: DeleteUserButtonProps) {
    }, [])
 
    if (state?.message != "") {
-      console.log(state.message)
+      console.log(state?.message)
    }
 
    if (!isMounted) {

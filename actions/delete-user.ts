@@ -19,8 +19,6 @@ export async function deleteUser(prevState: any, formData: FormData) {
       listId,
    })
 
-   console.log(id, listId)
-
    if (!validatedFields.success) {
       return {
          message: validatedFields.error.errors[0].message,

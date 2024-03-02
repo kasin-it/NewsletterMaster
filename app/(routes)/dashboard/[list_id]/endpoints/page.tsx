@@ -8,7 +8,7 @@ function EndpointsPage({
 }: {
    params: { list_id: string }
 }) {
-   const API_ENDPOINT = `https://${process.env.WEBSITE_URI}/newsletter/${list_id}`
+   const API_ENDPOINT = `${process.env.WEBSITE_URI}/api/newsletter/?id=${list_id}`
 
    return (
       <main className="flex flex-col gap-5 pb-5">

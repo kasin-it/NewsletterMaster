@@ -1,7 +1,15 @@
 "use client"
 
+import { useMemo } from "react"
 import { ResponsiveLine } from "@nivo/line"
+import { CalendarCheckIcon } from "lucide-react"
 
+import {
+   formatAnnuallyByMonth,
+   formatCreatedAtToFullTime,
+   formatCurrentMonthByDay,
+   formatHourlyComparisonToToday,
+} from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
    Card,
@@ -10,8 +18,31 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function SubscribersChart() {
+interface SubscribersChartProps {
+   data: { created_at: string }[]
+}
+interface TimeseriesChartProps {
+   data: { x: string; y: number }[]
+   className: string
+}
+
+export default function SubscribersChart({ data }: SubscribersChartProps) {
+   const dataGroupedByFullTime = useMemo(
+      () => formatCreatedAtToFullTime(data),
+      [data]
+   )
+   const dataGroupedByToday = useMemo(
+      () => formatHourlyComparisonToToday(data),
+      [data]
+   )
+   const dataGroupedByYear = useMemo(() => formatAnnuallyByMonth(data), [data])
+   const dataGroupedByMonth = useMemo(
+      () => formatCurrentMonthByDay(data),
+      [data]
+   )
+
    return (
       <Card className="w-full max-w-3xl">
          <CardHeader>
@@ -19,133 +50,116 @@ export default function SubscribersChart() {
             <CardDescription>Number of subscribers over time.</CardDescription>
          </CardHeader>
          <CardContent className="flex flex-col gap-4">
-            <div className="grid gap-2">
-               <div className="inline-flex items-center gap-2">
-                  <CalendarCheckIcon className="h-4 w-4" />
-                  <span className="font-medium">Time Interval</span>
-               </div>
-               <div className="flex items-center gap-2">
-                  <Button size="sm" variant="outline">
-                     Today
-                  </Button>
-                  <Button size="sm" variant="outline">
-                     This Month
-                  </Button>
-                  <Button size="sm" variant="outline">
-                     Last Month
-                  </Button>
-                  <Button size="sm" variant="outline">
-                     All Time
-                  </Button>
-               </div>
-            </div>
-            <TimeseriesChart className="aspect-[2/1] h-[300px] w-full" />
+            <Tabs defaultValue="today" className="w-[400px]">
+               <TabsList className="bg-white">
+                  <TabsTrigger value="all_time">All Time</TabsTrigger>
+                  <TabsTrigger value="year">This Year</TabsTrigger>
+                  <TabsTrigger value="month">This Month</TabsTrigger>
+                  <TabsTrigger value="today">Today</TabsTrigger>
+               </TabsList>
+               <TabsContent value="all_time">
+                  <TimeseriesChart
+                     data={dataGroupedByFullTime}
+                     className="aspect-[2/1] h-[300px] w-full"
+                  />
+               </TabsContent>
+               <TabsContent value="year">
+                  <TimeseriesChart
+                     data={dataGroupedByYear}
+                     className="aspect-[2/1] h-[300px] w-full"
+                  />
+               </TabsContent>
+               <TabsContent value="month">
+                  <TimeseriesChart
+                     data={dataGroupedByMonth}
+                     className="aspect-[2/1] h-[300px] w-full"
+                  />
+               </TabsContent>
+               <TabsContent value="today">
+                  <TimeseriesChart
+                     data={dataGroupedByToday}
+                     className="aspect-[2/1] h-[300px] w-full"
+                  />
+               </TabsContent>
+            </Tabs>
          </CardContent>
       </Card>
    )
 }
 
-function CalendarCheckIcon(props) {
+function TimeseriesChart({ data, className }: TimeseriesChartProps) {
    return (
-      <svg
-         {...props}
-         xmlns="http://www.w3.org/2000/svg"
-         width="24"
-         height="24"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         strokeWidth="2"
-         strokeLinecap="round"
-         strokeLinejoin="round"
-      >
-         <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-         <line x1="16" x2="16" y1="2" y2="6" />
-         <line x1="8" x2="8" y1="2" y2="6" />
-         <line x1="3" x2="21" y1="10" y2="10" />
-         <path d="m9 16 2 2 4-4" />
-      </svg>
-   )
-}
-
-function TimeseriesChart(props) {
-   return (
-      <div {...props}>
+      <div className={className}>
          <ResponsiveLine
             data={[
                {
-                  id: "Desktop",
-                  data: [
-                     { x: "2018-01-01", y: 7 },
-                     { x: "2018-01-02", y: 5 },
-                     { x: "2018-01-03", y: 11 },
-                     { x: "2018-01-04", y: 9 },
-                     { x: "2018-01-05", y: 12 },
-                     { x: "2018-01-06", y: 16 },
-                     { x: "2018-01-07", y: 13 },
-                  ],
-               },
-               {
-                  id: "Mobile",
-                  data: [
-                     { x: "2018-01-01", y: 9 },
-                     { x: "2018-01-02", y: 8 },
-                     { x: "2018-01-03", y: 13 },
-                     { x: "2018-01-04", y: 6 },
-                     { x: "2018-01-05", y: 8 },
-                     { x: "2018-01-06", y: 14 },
-                     { x: "2018-01-07", y: 11 },
-                  ],
+                  id: "Subscribers",
+                  data: data,
                },
             ]}
-            margin={{ top: 10, right: 20, bottom: 40, left: 40 }}
-            xScale={{
-               type: "time",
-               format: "%Y-%m-%d",
-               useUTC: false,
-               precision: "day",
-            }}
-            xFormat="time:%Y-%m-%d"
+            margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+            xScale={{ type: "point" }}
             yScale={{
                type: "linear",
-               min: 0,
+               min: "auto",
                max: "auto",
+               stacked: true,
+               reverse: false,
             }}
+            yFormat="1"
+            curve="natural"
             axisTop={null}
             axisRight={null}
             axisBottom={{
-               tickSize: 0,
-               tickPadding: 16,
-               format: "%d",
-               tickValues: "every 1 day",
+               tickSize: 5,
+               tickPadding: 5,
+               tickRotation: 0,
+               legend: "Date",
+               legendOffset: 36,
+               legendPosition: "middle",
+               truncateTickAt: 0,
             }}
             axisLeft={{
-               tickSize: 0,
-               tickValues: 5,
-               tickPadding: 16,
+               tickSize: 5,
+               tickPadding: 5,
+               tickRotation: 0,
+               legend: "count",
+               legendOffset: -40,
+               legendPosition: "middle",
+               truncateTickAt: 0,
             }}
-            colors={["#2563eb", "#e11d48"]}
-            pointSize={6}
+            pointSize={10}
+            pointColor={{ theme: "background" }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serieColor" }}
+            pointLabelYOffset={-12}
             useMesh={true}
-            gridYValues={6}
-            theme={{
-               tooltip: {
-                  chip: {
-                     borderRadius: "9999px",
-                  },
-                  container: {
-                     fontSize: "12px",
-                     textTransform: "capitalize",
-                     borderRadius: "6px",
-                  },
+            legends={[
+               {
+                  anchor: "bottom-right",
+                  direction: "column",
+                  justify: false,
+                  translateX: 100,
+                  translateY: 0,
+                  itemsSpacing: 0,
+                  itemDirection: "left-to-right",
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemOpacity: 0.75,
+                  symbolSize: 12,
+                  symbolShape: "circle",
+                  symbolBorderColor: "rgba(0, 0, 0, .5)",
+                  effects: [
+                     {
+                        on: "hover",
+                        style: {
+                           itemBackground: "rgba(0, 0, 0, .03)",
+                           itemOpacity: 1,
+                        },
+                     },
+                  ],
                },
-               grid: {
-                  line: {
-                     stroke: "#f3f4f6",
-                  },
-               },
-            }}
-            role="application"
+            ]}
          />
       </div>
    )
