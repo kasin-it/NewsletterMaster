@@ -34,7 +34,7 @@ async function DashboardPage() {
    return (
       <main className="container flex max-w-6xl flex-col gap-10 pt-40">
          <div className="flex flex-wrap items-center justify-between gap-10">
-            <h1 className="text-3xl font-bold">My email lists:</h1>
+            <h1 className="text-4xl font-bold">My email lists:</h1>
             <Link
                href={"/dashboard/create-email-list"}
                className={cn(buttonVariants({ variant: "default" }))}

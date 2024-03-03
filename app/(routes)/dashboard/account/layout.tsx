@@ -9,7 +9,7 @@ function AccountLayout({ children }: { children: React.ReactNode }) {
    return (
       <main className="container flex max-w-6xl flex-col gap-10 pt-40">
          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-4">
+            <div className="flex w-full flex-col gap-4">
                <Link
                   href={"/dashboard"}
                   className="flex items-center gap-2 text-muted-foreground"
@@ -20,7 +20,7 @@ function AccountLayout({ children }: { children: React.ReactNode }) {
                <Separator />
             </div>
          </div>
-         <div className="flex gap-8">
+         <div className="flex flex-col gap-8 md:flex-row">
             <Sidebar />
             {children}
          </div>

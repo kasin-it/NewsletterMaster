@@ -7,11 +7,10 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 interface SidebarProps {
-   listName: string
    listId: string
 }
 
-function Sidebar({ listName, listId }: SidebarProps) {
+function Sidebar({ listId }: SidebarProps) {
    const items = [
       {
          label: "Subscribers",
@@ -29,7 +28,7 @@ function Sidebar({ listName, listId }: SidebarProps) {
    const pathname = usePathname()
 
    return (
-      <nav className={"flex flex-col gap-2"}>
+      <nav className={"flex gap-2 overflow-x-auto md:flex-col"}>
          {items.map((item) => (
             <Link
                key={item.href}
@@ -39,7 +38,7 @@ function Sidebar({ listName, listId }: SidebarProps) {
                   pathname === item.href
                      ? "bg-primary text-white hover:bg-primary hover:text-white"
                      : "hover:bg-transparent hover:underline",
-                  "w-[200px] justify-start"
+                  "w-[200px] md:justify-start"
                )}
             >
                {item.label}

@@ -1,10 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { createBrowserClient } from "@supabase/ssr"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 function Sidebar() {
    const items = [
@@ -18,9 +19,20 @@ function Sidebar() {
       },
    ]
    const pathname = usePathname()
+   const router = useRouter()
+
+   const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+   )
+
+   const handleSignOut = async () => {
+      await supabase.auth.signOut()
+      router.push("/")
+   }
 
    return (
-      <nav className={"flex flex-col gap-2"}>
+      <nav className={"flex gap-2 overflow-x-auto md:flex-col"}>
          {items.map((item) => (
             <Link
                key={item.href}
@@ -30,12 +42,19 @@ function Sidebar() {
                   pathname === item.href
                      ? "bg-primary text-white hover:bg-primary hover:text-white"
                      : "hover:bg-transparent hover:underline",
-                  "w-[200px] justify-start"
+                  "w-[200px] md:justify-start"
                )}
             >
                {item.label}
             </Link>
          ))}
+         <Button
+            variant={"outline"}
+            className="w-[200px] md:justify-start"
+            onClick={handleSignOut}
+         >
+            Sign Out
+         </Button>
       </nav>
    )
 }
