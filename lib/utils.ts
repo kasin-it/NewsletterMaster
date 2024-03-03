@@ -16,126 +16,177 @@ export function copyToClipboard(value: string) {
    navigator.clipboard.writeText(value)
 }
 
-export function formatCreatedAtToFullTime(data: { created_at: string }[]) {
+export function formatCreatedAtToFullTime(
+   data: { created_at: string }[]
+): { x: string; y: number }[] {
    const fullTimeMap = new Map<string, number>()
+   let earliestDate: Date | null = null
+   let latestDate: Date | null = null
 
+   // Create a map with counters for each year
    data.forEach((item) => {
       const entryDate = new Date(item.created_at)
-      const entryYear = entryDate.getFullYear().toString()
+      const entryYear = entryDate.getFullYear()
 
-      fullTimeMap.set(entryYear, (fullTimeMap.get(entryYear) || 0) + 1)
+      if (!earliestDate || entryDate < earliestDate) {
+         earliestDate = entryDate
+      }
+
+      if (!latestDate || entryDate > latestDate) {
+         latestDate = entryDate
+      }
+
+      const entryKey = entryYear.toString()
+      fullTimeMap.set(entryKey, (fullTimeMap.get(entryKey) || 0) + 1)
    })
 
-   // Convert the Map to an array and sort it by the parsed date in descending order
-   const output = Array.from(fullTimeMap, ([key, value]) => ({
-      x: key,
-      y: value,
-   }))
-      .sort((a, b) => {
-         const dateA = new Date(a.x)
-         const dateB = new Date(b.x)
-         return dateB > dateA ? -1 : dateB < dateA ? 1 : 0
-      })
-      .map(({ x, y }) => {
-         const date = new Date(x)
+   const output: { x: string; y: number }[] = []
 
-         const previousYearValue =
-            fullTimeMap.get((date.getFullYear() - 1).toString()) || 0
+   // Calculate running total of entries per year
+   let currentTotal = 0
+   for (
+      let year = earliestDate!.getFullYear();
+      year <= latestDate!.getFullYear();
+      year++
+   ) {
+      const key = year.toString()
+      const count = fullTimeMap.get(key) || 0
+      output.push({ x: key, y: (currentTotal += count) })
+   }
 
-         return {
-            x: date.getFullYear().toString(),
-            y: y + previousYearValue,
+   return output
+}
+
+export function formatAnnuallyByMonth(data: { created_at: string }[]) {
+   const yearlyData = new Map<string, number>()
+   let earliestDate: Date | null = null
+   let latestDate: Date | null = null
+
+   const localYear = new Date(Date.now()).getFullYear()
+
+   data.forEach((entry) => {
+      const entryDate = new Date(entry.created_at)
+      const entryYear = entryDate.getFullYear()
+      const entryMonth = (entryDate.getMonth() + 1).toString()
+
+      if (entryYear == localYear) {
+         if (!earliestDate || entryDate < earliestDate) {
+            earliestDate = entryDate
          }
-      })
+
+         if (!latestDate || entryDate > latestDate) {
+            latestDate = entryDate
+         }
+         yearlyData.set(entryMonth, (yearlyData.get(entryMonth) || 0) + 1)
+      }
+   })
+
+   const output: { x: string; y: number }[] = []
+
+   let currentTotal = 0
+   for (
+      let month = earliestDate!.getMonth() + 1;
+      month <= latestDate!.getMonth() + 1;
+      month++
+   ) {
+      const key = month.toString()
+      const count = yearlyData.get(key) || 0
+      output.push({ x: key, y: (currentTotal += count) })
+   }
+
+   return output
+}
+
+export function formatCurrentMonthByDay(data: { created_at: string }[]) {
+   const monthlyData = new Map<string, number>()
+   let earliestDate: Date | null = null
+   let latestDate: Date | null = null
+
+   const localDate = new Date(Date.now())
+   const localYear = localDate.getFullYear()
+   const localMonth = localDate.getMonth()
+
+   data.forEach((entry) => {
+      const entryDate = new Date(entry.created_at)
+      const entryYear = entryDate.getFullYear()
+      const entryMonth = entryDate.getMonth()
+      const entryDay = entryDate.getUTCDate()
+      const entryDayStr = entryDay.toString()
+
+      if (entryYear == localYear && entryMonth == localMonth) {
+         if (!earliestDate || entryDate < earliestDate) {
+            earliestDate = entryDate
+         }
+
+         if (!latestDate || entryDate > latestDate) {
+            latestDate = entryDate
+         }
+         monthlyData.set(entryDayStr, (monthlyData.get(entryDayStr) || 0) + 1)
+      }
+   })
+
+   const output: { x: string; y: number }[] = []
+
+   let currentTotal = 0
+   for (
+      let day = earliestDate!.getUTCDate();
+      day <= latestDate!.getUTCDate();
+      day++
+   ) {
+      const key = day.toString()
+      const count = monthlyData.get(key) || 0
+      output.push({ x: key, y: (currentTotal += count) })
+   }
 
    return output
 }
 
 export function formatHourlyComparisonToToday(data: { created_at: string }[]) {
-   const hourlyData: { [key: number]: number } = {}
-   const currentDate = new Date(Date.now())
-   const currentMonth = currentDate.getMonth()
-   const currentYear = currentDate.getFullYear()
-   const currentDay = currentDate.getUTCDate()
+   const dailyData = new Map<string, number>()
+   let earliestDate: Date | null = null
+   let latestDate: Date | null = null
+
+   const localDate = new Date(Date.now())
+   const localYear = localDate.getFullYear()
+   const localMonth = localDate.getMonth()
+   const localDay = localDate.getUTCDate()
 
    data.forEach((entry) => {
       const entryDate = new Date(entry.created_at)
+      const entryYear = entryDate.getFullYear()
+      const entryMonth = entryDate.getMonth()
+      const entryDay = entryDate.getUTCDate()
+      const entryHour = entryDate.getHours()
+      const entryHourStr = entryHour.toString()
 
       if (
-         entryDate.getMonth() == currentMonth &&
-         entryDate.getFullYear() == currentYear &&
-         entryDate.getUTCDate() == currentDay
+         entryYear == localYear &&
+         entryMonth == localMonth &&
+         entryDay == localDay
       ) {
-         const entryHour = entryDate.getUTCHours() + 1
-         hourlyData[entryHour] = (hourlyData[entryHour] || 0) + 1
+         if (!earliestDate || entryDate < earliestDate) {
+            earliestDate = entryDate
+         }
+
+         if (!latestDate || entryDate > latestDate) {
+            latestDate = entryDate
+         }
+         dailyData.set(entryHourStr, (dailyData.get(entryHourStr) || 0) + 1)
       }
    })
 
-   const result = Object.entries(hourlyData).map(([hourStr, y]) => {
-      const prev = parseInt(hourStr) - 1
+   const output: { x: string; y: number }[] = []
 
-      const previousDayValue = hourlyData[prev] || 0
+   let currentTotal = 0
+   for (
+      let day = earliestDate!.getUTCDate();
+      day <= latestDate!.getUTCDate();
+      day++
+   ) {
+      const key = day.toString()
+      const count = dailyData.get(key) || 0
+      output.push({ x: key, y: (currentTotal += count) })
+   }
 
-      return {
-         x: hourStr,
-         y: y + previousDayValue,
-      }
-   })
-
-   return result
-}
-
-export function formatAnnuallyByMonth(data: { created_at: string }[]) {
-   const yearlyData: { [key: number]: number } = {}
-   const localYear = new Date(Date.now()).getFullYear()
-
-   data.forEach((entry) => {
-      const entryDate = new Date(entry.created_at)
-      if (entryDate.getFullYear() == localYear) {
-         entryDate.getMonth()
-         yearlyData[entryDate.getMonth() + 1] =
-            (yearlyData[entryDate.getMonth()] || 0) + 1
-      }
-   })
-
-   const result = Object.keys(yearlyData)
-      .filter((monthKey) => !Number.isNaN(parseInt(monthKey)))
-      .map((monthKey) => ({
-         x: monthKey,
-         y:
-            yearlyData[parseInt(monthKey)] +
-            (yearlyData[parseInt(monthKey) - 1] || 0),
-      }))
-
-   return result
-}
-
-export function formatCurrentMonthByDay(data: { created_at: string }[]) {
-   const currentDate = new Date(Date.now())
-   const currentMonth = currentDate.getMonth()
-   const currentYear = currentDate.getFullYear()
-
-   const dailyData: { [key: number]: number } = {}
-
-   data.forEach((entry) => {
-      const entryDate = new Date(entry.created_at)
-      if (
-         entryDate.getFullYear() == currentYear &&
-         entryDate.getMonth() == currentMonth
-      ) {
-         const day = entryDate.getDate()
-         dailyData[day] = (dailyData[day] || 0) + 1 + (dailyData[day - 1] || 0)
-      }
-   })
-
-   const result = Object.keys(dailyData)
-      .filter((dayKey) => !Number.isNaN(parseInt(dayKey)))
-      .map((dayKey) => ({
-         x: dayKey,
-         y:
-            dailyData[parseInt(dayKey)] +
-            (dailyData[parseInt(dayKey) - 1] || 0),
-      }))
-
-   return result
+   return output
 }
