@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+
+import ChangeEmailForm from "./_components/change-email-form"
+import ChangePasswordForm from "./_components/change-password-form"
 
 function AccountPage() {
    return (
@@ -13,16 +13,8 @@ function AccountPage() {
             </p>
          </div>
          <Separator />
-         <form>
-            <Label>Email</Label>
-            <Input />
-            <Button>Change Email</Button>
-         </form>
-         <form>
-            <Label>Password</Label>
-            <Input />
-            <Button>Change Password</Button>
-         </form>
+         <ChangeEmailForm />
+         <ChangePasswordForm />
       </main>
    )
 }
