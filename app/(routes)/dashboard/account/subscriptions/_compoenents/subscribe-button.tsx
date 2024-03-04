@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 function SubscribeButton() {
    return (
-      <form action={subscribe} method="POST">
+      <form action={subscribe}>
          <Button type="submit">Subscribe</Button>
       </form>
    )

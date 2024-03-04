@@ -33,7 +33,7 @@ function ChangeEmailForm() {
 
    const [state, formAction] = useFormState(changeEmail, initialState)
    return (
-      <form action={formAction} method="POST" className="flex flex-col gap-3">
+      <form action={formAction} className="flex flex-col gap-3">
          {state?.error && (
             <Alert
                variant="destructive"
