@@ -1,5 +1,7 @@
 import { Separator } from "@/components/ui/separator"
 
+import SubscribeButton from "./_compoenents/subscribe-button"
+
 function SubscriptionsPage() {
    return (
       <main className="flex flex-col gap-5 pb-5">
@@ -10,6 +12,8 @@ function SubscriptionsPage() {
             </p>
          </div>
          <Separator />
+         <SubscribeButton />
+
          {/* <UpdateEmailListForm
       listId={list_id}
       listName={data![0].list_name}

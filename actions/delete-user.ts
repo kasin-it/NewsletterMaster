@@ -5,11 +5,6 @@ import { cookies } from "next/headers"
 import { createServerClient } from "@supabase/ssr"
 import { z } from "zod"
 
-const schema = z.object({
-   userId: z.string(),
-   listId: z.string(),
-})
-
 export async function deleteUser({
    listId,
    userId,
@@ -17,11 +12,6 @@ export async function deleteUser({
    listId: string
    userId: string
 }) {
-   const validatedFields = schema.safeParse({
-      userId,
-      listId,
-   })
-
    const cookieStore = cookies()
 
    const supabase = createServerClient(
