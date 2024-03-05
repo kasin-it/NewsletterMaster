@@ -28,7 +28,7 @@ function Sidebar({ listId }: SidebarProps) {
    const pathname = usePathname()
 
    return (
-      <nav className={"flex gap-2 overflow-x-auto md:flex-col"}>
+      <nav className={"flex gap-2 overflow-x-auto lg:flex-col"}>
          {items.map((item) => (
             <Link
                key={item.href}
@@ -38,7 +38,7 @@ function Sidebar({ listId }: SidebarProps) {
                   pathname === item.href
                      ? "bg-primary text-white hover:bg-primary hover:text-white"
                      : "hover:bg-transparent hover:underline",
-                  "w-[200px] md:justify-start"
+                  "w-full max-w-[200px] lg:justify-start"
                )}
             >
                {item.label}

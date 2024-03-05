@@ -7,7 +7,7 @@ import { createServerClient } from "@supabase/ssr"
 
 import { stripe } from "@/lib/stripe"
 
-export async function subscribe() {
+export async function unsubscribe() {
    const cookieStore = cookies()
 
    const supabase = createServerClient(
@@ -30,8 +30,6 @@ export async function subscribe() {
       revalidatePath("/dashboard/account")
    }
 
-   const userId = user!.id
-
    const afterUrl = "http://localhost:3000/dashboard/account"
 
    const { data } = await supabase
@@ -46,41 +44,13 @@ export async function subscribe() {
       userSubscription.length > 0 &&
       userSubscription[0].stripe_customer_id
    ) {
-      const stripeSession = await stripe.billingPortal.sessions.create({
-         customer: userSubscription[0].stripe_customer_id,
-         return_url: afterUrl,
-      })
+      await stripe.subscriptions.update(
+         userSubscription[0].stripe_customer_id,
+         { cancel_at_period_end: true }
+      )
 
-      redirect(stripeSession.url)
+      redirect(afterUrl)
    }
 
-   const stripeSession = await stripe.checkout.sessions.create({
-      success_url: afterUrl,
-      cancel_url: afterUrl,
-      payment_method_types: ["card"],
-      mode: "subscription",
-      billing_address_collection: "auto",
-      customer_email: user?.email,
-      line_items: [
-         {
-            price_data: {
-               currency: "USD",
-               product_data: {
-                  name: "Genius Pro",
-                  description: "Unlimited AI Generations",
-               },
-               unit_amount: 2000,
-               recurring: {
-                  interval: "month",
-               },
-            },
-            quantity: 1,
-         },
-      ],
-      metadata: {
-         userId,
-      },
-   })
-
-   redirect(stripeSession.url!)
+   redirect(afterUrl)
 }

@@ -2,10 +2,12 @@ import { subscribe } from "@/actions/subscribe"
 
 import { Button } from "@/components/ui/button"
 
-function SubscribeButton() {
+function SubscribeButton({ children }: { children: React.ReactNode }) {
    return (
       <form action={subscribe}>
-         <Button type="submit">Subscribe</Button>
+         <Button type="submit" variant={"secondary"}>
+            {children}
+         </Button>
       </form>
    )
 }

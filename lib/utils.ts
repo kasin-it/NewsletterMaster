@@ -158,6 +158,8 @@ export function formatHourlyComparisonToToday(data: { created_at: string }[]) {
       const entryDay = entryDate.getUTCDate()
       const entryHour = entryDate.getHours()
       const entryHourStr = entryHour.toString()
+      earliestDate = entryDate
+      latestDate = entryDate
 
       if (
          entryYear == localYear &&
