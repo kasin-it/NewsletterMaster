@@ -27,25 +27,26 @@ export async function unsubscribe() {
    } = await supabase.auth.getUser()
 
    if (!user) {
-      revalidatePath("/dashboard/account")
+      revalidatePath("/dashboard/account/subscriptions")
    }
 
    const afterUrl = "http://localhost:3000/dashboard/account"
 
    const { data } = await supabase
       .from("subscribers")
-      .select("stripe_customer_id")
+      .select("stripe_customer_id, stripe_subscription_id")
       .eq("user_id", user?.id)
+   await supabase.from("subscribers").delete().eq("user_id", user?.id)
 
    const userSubscription = data
 
    if (
       userSubscription &&
       userSubscription.length > 0 &&
-      userSubscription[0].stripe_customer_id
+      userSubscription[0].stripe_subscription_id
    ) {
       await stripe.subscriptions.update(
-         userSubscription[0].stripe_customer_id,
+         userSubscription[0].stripe_subscription_id,
          { cancel_at_period_end: true }
       )
 

@@ -4,7 +4,7 @@ import { Input } from "./ui/input"
 export default function Newsletter() {
    return (
       <section>
-         <div className="mx-auto max-w-6xl px-4 sm:px-6">
+         <div className="mx-auto mt-16 max-w-6xl px-4 sm:px-6 ">
             <div className="pb-12 md:pb-20">
                {/* CTA box */}
                <div

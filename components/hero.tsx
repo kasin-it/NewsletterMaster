@@ -77,9 +77,9 @@ export default function Hero() {
                                     size: "lg",
                                  })
                               )}
-                              href="#pricing"
+                              href="/auth/sign-in"
                            >
-                              Get Started Today
+                              Get Started
                            </Link>
                         </div>
                         <div>
@@ -111,7 +111,7 @@ export default function Hero() {
                /> */}
                <div className="flex justify-center">
                   <Image
-                     src="/images/hero-image.png"
+                     src="/images/newsletter.jpg"
                      alt="hero image"
                      width={768}
                      height={432}

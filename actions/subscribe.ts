@@ -32,7 +32,7 @@ export async function subscribe() {
 
    const userId = user!.id
 
-   const afterUrl = "http://localhost:3000/dashboard/account"
+   const afterUrl = "http://localhost:3000/dashboard/account/subscriptions"
 
    const { data } = await supabase
       .from("subscribers")

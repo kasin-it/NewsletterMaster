@@ -22,7 +22,7 @@ export default function Features() {
    }, [])
 
    return (
-      <section className="relative">
+      <section className="relative" id="features">
          {/* Section background (needs .relative class on parent and next sibling elements) */}
          <div
             className="pointer-events-none absolute inset-0 mb-16 bg-gray-100"
@@ -38,9 +38,9 @@ export default function Features() {
                      Explore the solutions
                   </h1>
                   <p className="text-xl text-gray-600">
-                     Duis aute irure dolor in reprehenderit in voluptate velit
-                     esse cillum dolore eu fugiat nulla pariatur excepteur sint
-                     occaecat cupidatat.
+                     The SaaS platform streamlines newsletter processes with
+                     user-friendly APIs, facilitating easy subscription, profile
+                     management, and personalized email campaigns.
                   </p>
                </div>
 
@@ -51,16 +51,14 @@ export default function Features() {
                      className="mx-auto max-w-xl md:col-span-7 md:mt-6 md:w-full md:max-w-none lg:col-span-6"
                      data-aos="fade-right"
                   >
-                     <div className="mb-8 md:pr-4 lg:pr-12 xl:pr-16">
+                     {/* <div className="mb-8 md:pr-4 lg:pr-12 xl:pr-16">
                         <h3 className="h3 mb-3 text-3xl font-bold">
-                           Powerful suite of tools
+                        Scalable and Secure API Endpoints
                         </h3>
                         <p className="text-xl text-gray-600">
-                           Duis aute irure dolor in reprehenderit in voluptate
-                           velit esse cillum dolore pariatur. Excepteur sint
-                           occaecat cupidatat non proident, sunt in culpa.
+                        Ensure the scalability and security of API endpoints, providing a reliable infrastructure for developers to integrate the platform seamlessly while safeguarding user data throughout the management and communication processes.
                         </p>
-                     </div>
+                     </div> */}
                      {/* Tabs buttons */}
                      <div className="mb-8 md:mb-0">
                         <Link
@@ -73,12 +71,15 @@ export default function Features() {
                         >
                            <div>
                               <div className="mb-1 font-bold leading-snug tracking-tight">
-                                 Building the Simple ecosystem
+                                 Scalable and Secure API Endpoints
                               </div>
                               <div className="text-gray-600">
-                                 Take collaboration to the next level with
-                                 security and administrative features built for
-                                 teams.
+                                 Ensure the scalability and security of API
+                                 endpoints, providing a reliable infrastructure
+                                 for developers to integrate the platform
+                                 seamlessly while safeguarding user data
+                                 throughout the management and communication
+                                 processes.
                               </div>
                            </div>
                            <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
@@ -101,12 +102,14 @@ export default function Features() {
                         >
                            <div>
                               <div className="mb-1 font-bold leading-snug tracking-tight">
-                                 Building the Simple ecosystem
+                                 Intuitive User Interface
                               </div>
                               <div className="text-gray-600">
-                                 Take collaboration to the next level with
-                                 security and administrative features built for
-                                 teams.
+                                 Implement a visually appealing and
+                                 user-friendly interface that simplifies the
+                                 subscription process, allowing users to
+                                 effortlessly sign up for newsletters and manage
+                                 their profiles.
                               </div>
                            </div>
                            <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
@@ -132,12 +135,15 @@ export default function Features() {
                         >
                            <div>
                               <div className="mb-1 font-bold leading-snug tracking-tight">
-                                 Building the Simple ecosystem
+                                 Automation Features
                               </div>
                               <div className="text-gray-600">
-                                 Take collaboration to the next level with
-                                 security and administrative features built for
-                                 teams.
+                                 Implement automation features such as scheduled
+                                 emails, drip campaigns, and triggered responses
+                                 to streamline communication processes, saving
+                                 time for businesses while maintaining
+                                 consistent and timely engagement with
+                                 subscribers.
                               </div>
                            </div>
                            <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
