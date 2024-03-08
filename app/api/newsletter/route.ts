@@ -4,12 +4,15 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr"
 import { z } from "zod"
 
 const dataSchema = z.object({
-   name: z.string(),
+   name: z.string().optional(),
    email: z.string().email(),
 })
 
 export async function POST(request: NextRequest, response: NextResponse) {
    const cookieStore = cookies()
+
+   const body = await request
+   console.log(body)
 
    let parsedData
 

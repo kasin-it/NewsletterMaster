@@ -116,7 +116,13 @@ export default function Newsletter() {
                         </p>
 
                         {/* CTA form */}
-                        <form className="w-full lg:w-auto">
+                        <form
+                           action={
+                              "http://localhost:3000/api/newsletter/?id=4a78909f-94cd-48b4-b013-306ff52fe1c6"
+                           }
+                           method="post"
+                           className="w-full lg:w-auto"
+                        >
                            <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-md sm:flex-row lg:mx-0">
                               <Input
                                  type="email"

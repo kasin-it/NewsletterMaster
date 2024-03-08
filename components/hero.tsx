@@ -111,7 +111,7 @@ export default function Hero() {
                /> */}
                <div className="flex justify-center">
                   <Image
-                     src="/images/newsletter.jpg"
+                     src="/images/newsletter.webp"
                      alt="hero image"
                      width={768}
                      height={432}

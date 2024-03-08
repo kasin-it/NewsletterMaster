@@ -125,7 +125,7 @@ export default function Features() {
                               </svg>
                            </div>
                         </Link>
-                        <Link
+                        {/* <Link
                            className={`mb-3 flex items-center rounded border p-5 text-lg transition duration-300 ease-in-out ${tab !== 3 ? "border-gray-200 bg-white shadow-md hover:shadow-lg" : "border-transparent bg-gray-200"}`}
                            href="#0"
                            onClick={(e) => {
@@ -159,7 +159,7 @@ export default function Features() {
                                  />
                               </svg>
                            </div>
-                        </Link>
+                        </Link> */}
                      </div>
                   </div>
 
@@ -236,7 +236,7 @@ export default function Features() {
                               </div>
                            </Transition>
                            {/* Item 3 */}
-                           <Transition
+                           {/* <Transition
                               show={tab === 3}
                               appear={true}
                               className="w-full"
@@ -266,7 +266,7 @@ export default function Features() {
                                     style={{ top: "30%" }}
                                  />
                               </div>
-                           </Transition>
+                           </Transition> */}
                         </div>
                      </div>
                   </div>
