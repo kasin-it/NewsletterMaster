@@ -107,13 +107,9 @@ export default function Newsletter() {
                   <div className="relative flex flex-col items-center justify-between lg:flex-row">
                      {/* CTA content */}
                      <div className="text-center lg:max-w-xl lg:text-left">
-                        <h3 className="h3 mb-2 text-3xl font-bold text-white">
-                           Want more tutorials & guides?
+                        <h3 className="h3 mb-5 text-3xl font-bold text-white">
+                           Want to know more?
                         </h3>
-                        <p className="mb-6 text-lg text-gray-300">
-                           Lorem ipsum dolor sit amet consectetur adipisicing
-                           elit nemo expedita voluptas culpa sapiente.
-                        </p>
 
                         {/* CTA form */}
                         <form
