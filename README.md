@@ -1,4 +1,4 @@
-# SASS Newsletter API
+# SASS Newsletter
 
 Welcome to the SASS Newsletter API, a simple GraphQL API designed for managing newsletter subscriptions and sending mass emails.
 
@@ -8,6 +8,7 @@ Welcome to the SASS Newsletter API, a simple GraphQL API designed for managing n
 -  **User registration and profile management**
 -  **Newsletter subscription management**
 -  **Mass email sending to all subscribed users**
+-  **Stripe subscriptions**
 
 ## Local Setup
 
@@ -21,10 +22,16 @@ Welcome to the SASS Newsletter API, a simple GraphQL API designed for managing n
 
     2. Install project dependencies:
 
-    pnpm install
+    ```bash
+        pnpm install
+    ```
+
 
     3. Start the app:
 
-    pnpm dev
+    ```bash
+        pnpm dev
+    ```
+
 
     Interact with the API using tools like Altair or Insomnia.
