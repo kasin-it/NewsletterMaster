@@ -12,26 +12,28 @@ Welcome to the SASS Newsletter API, a simple GraphQL API designed for managing n
 
 ## Local Setup
 
-## Setup Instructions
+### Setup Instructions
 
-    1. Clone this repository:
+1. Checkout to the "local" branch:
 
-    ```bash
-        git clone https://github.com/yourusername/sass-newsletter.git
-    ```
+   ```bash
+   git checkout local
+   ```
 
-    2. Install project dependencies:
+2. Install project dependencies:
 
-    ```bash
-        pnpm install
-    ```
+   ```bash
+   pnpm i
+   ```
 
+3. Start Supabase:
 
-    3. Start the app:
+   ```bash
+   supabase start
+   ```
 
-    ```bash
-        pnpm dev
-    ```
+4. Run the project in preview mode:
 
-
-    Interact with the API using tools like Altair or Insomnia.
+   ```bash
+   pnpm run preview
+   ```
