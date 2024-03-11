@@ -43,15 +43,64 @@ export async function createEmailList(prevState: any, formData: FormData) {
 
    const userId = (await supabase.auth.getUser()).data.user?.id
 
-   const { error } = await supabase
-      .from("email_lists")
-      .insert({ list_name: listName, desc, user_id: userId })
+   const { data: subscriberData, error: subscriberError } = await supabase
+      .from("subscribers")
+      .select("stripe_current_period_end")
 
-   if (error != null) {
+   if (subscriberError !== null) {
+      console.error("Error fetching subscriber data:", subscriberError)
       return {
-         message: "Something went wrong, try again later",
+         message: "An unexpected error occurred, please try again.",
       }
    }
 
-   redirect("/dashboard/")
+   const { data: emailListsData, error: emailListsError } = await supabase
+      .from("email_lists")
+      .select("id")
+
+   if (emailListsError !== null) {
+      console.error("Error fetching email lists data:", emailListsError)
+      return {
+         message: "An unexpected error occurred, please try again.",
+      }
+   }
+
+   const currentTime = new Date(Date.now())
+
+   if (
+      !(subscriberData && subscriberData.length > 0) &&
+      emailListsData &&
+      emailListsData.length > 0
+   ) {
+      return {
+         message: "You must subscribe to create more than one email list.",
+      }
+   }
+
+   if (
+      subscriberData &&
+      subscriberData.length >= 1 &&
+      subscriberData[0].stripe_current_period_end &&
+      currentTime.getTime() < subscriberData[0].stripe_current_period_end
+   ) {
+      return {
+         message: "You must subscribe to create more than one email list.",
+      }
+   }
+
+   try {
+      const { error } = await supabase
+         .from("email_lists")
+         .insert([{ list_name: listName, desc, user_id: userId }])
+
+      if (error !== null) {
+         throw new Error(error.message)
+      }
+   } catch (err) {
+      console.error("Error creating email list:", err)
+      return {
+         message: "Something went wrong, please try again.",
+      }
+   }
+   redirect("/dashboard")
 }
