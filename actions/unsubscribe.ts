@@ -30,7 +30,7 @@ export async function unsubscribe() {
       revalidatePath("/dashboard/account/subscriptions")
    }
 
-   const afterUrl = "http://localhost:3000/dashboard/account"
+   const afterUrl = process.env.WEBSITE_URI + "/dashboard/account"
 
    const { data } = await supabase
       .from("subscribers")

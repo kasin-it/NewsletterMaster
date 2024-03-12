@@ -114,7 +114,8 @@ export default function Newsletter() {
                         {/* CTA form */}
                         <form
                            action={
-                              "http://localhost:3000/api/newsletter/?id=4a78909f-94cd-48b4-b013-306ff52fe1c6"
+                              process.env.WEBSITE_URI +
+                              "/api/newsletter/?id=4a78909f-94cd-48b4-b013-306ff52fe1c6"
                            }
                            method="post"
                            className="w-full lg:w-auto"
