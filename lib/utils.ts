@@ -20,8 +20,8 @@ export function formatCreatedAtToFullTime(
    data: { created_at: string }[]
 ): { x: string; y: number }[] {
    const fullTimeMap = new Map<string, number>()
-   let earliestDate: Date | null = null
-   let latestDate: Date | null = null
+   let earliestDate = new Date(Date.now())
+   let latestDate = new Date()
 
    // Create a map with counters for each year
    data.forEach((item) => {
@@ -45,8 +45,8 @@ export function formatCreatedAtToFullTime(
    // Calculate running total of entries per year
    let currentTotal = 0
    for (
-      let year = earliestDate!.getFullYear();
-      year <= latestDate!.getFullYear();
+      let year = earliestDate.getFullYear();
+      year <= latestDate.getFullYear();
       year++
    ) {
       const key = year.toString()
@@ -59,8 +59,8 @@ export function formatCreatedAtToFullTime(
 
 export function formatAnnuallyByMonth(data: { created_at: string }[]) {
    const yearlyData = new Map<string, number>()
-   let earliestDate: Date | null = null
-   let latestDate: Date | null = null
+   let earliestDate = new Date()
+   let latestDate = new Date(Date.now())
 
    const localYear = new Date(Date.now()).getFullYear()
 
@@ -99,8 +99,8 @@ export function formatAnnuallyByMonth(data: { created_at: string }[]) {
 
 export function formatCurrentMonthByDay(data: { created_at: string }[]) {
    const monthlyData = new Map<string, number>()
-   let earliestDate: Date | null = null
-   let latestDate: Date | null = null
+   let earliestDate = new Date()
+   let latestDate = new Date(Date.now())
 
    const localDate = new Date(Date.now())
    const localYear = localDate.getFullYear()
@@ -143,8 +143,8 @@ export function formatCurrentMonthByDay(data: { created_at: string }[]) {
 
 export function formatHourlyComparisonToToday(data: { created_at: string }[]) {
    const dailyData = new Map<string, number>()
-   let earliestDate: Date | null = null
-   let latestDate: Date | null = null
+   let earliestDate = new Date()
+   let latestDate = new Date(Date.now())
 
    const localDate = new Date(Date.now())
    const localYear = localDate.getFullYear()

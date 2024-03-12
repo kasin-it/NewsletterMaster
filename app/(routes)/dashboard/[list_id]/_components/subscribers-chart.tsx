@@ -2,7 +2,6 @@
 
 import { useMemo } from "react"
 import { ResponsiveLine } from "@nivo/line"
-import { CalendarCheckIcon } from "lucide-react"
 
 import {
    formatAnnuallyByMonth,

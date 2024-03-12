@@ -4,7 +4,6 @@ import { notFound } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
 
 import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
 
 import { columns } from "./_components/columns"
 import SubscribersChart from "./_components/subscribers-chart"
