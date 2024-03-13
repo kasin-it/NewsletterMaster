@@ -9,7 +9,7 @@ import { buttonVariants } from "./ui/button"
 
 export default function Hero() {
    return (
-      <section className="relative">
+      <section className="relative overflow-hidden">
          {/* Illustration behind hero content */}
          <div
             className="-z-1 pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 transform"
