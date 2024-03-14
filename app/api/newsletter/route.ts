@@ -11,9 +11,6 @@ const dataSchema = z.object({
 export async function POST(request: NextRequest, response: NextResponse) {
    const cookieStore = cookies()
 
-   const body = await request
-   console.log(body)
-
    let parsedData
 
    try {

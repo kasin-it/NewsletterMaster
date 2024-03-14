@@ -1,3 +1,4 @@
+import NewsletterForm from "./newsletter-form"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
@@ -112,31 +113,13 @@ export default function Newsletter() {
                         </h3>
 
                         {/* CTA form */}
-                        <form
-                           action={
+                        <NewsletterForm
+                           url={
+                              "http://" +
                               process.env.WEBSITE_URI +
-                              "/api/newsletter/?id=4a78909f-94cd-48b4-b013-306ff52fe1c6"
+                              "/api/newsletter/?id=9f7975b9-e67a-41bd-8966-bdb6acec3606"
                            }
-                           method="post"
-                           className="w-full lg:w-auto"
-                        >
-                           <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-md sm:flex-row lg:mx-0">
-                              <Input
-                                 type="email"
-                                 className="form-input mb-2 w-full appearance-none rounded-sm border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-gray-600 sm:mb-0 sm:mr-2"
-                                 placeholder="Your email…"
-                                 aria-label="Your email…"
-                              />
-                              <Button className="btn bg-blue-600 text-white shadow hover:bg-blue-700">
-                                 Subscribe
-                              </Button>
-                           </div>
-                           {/* Success message */}
-                           {/* <p className="text-sm text-gray-400 mt-3">Thanks for subscribing!</p> */}
-                           <p className="mt-3 text-sm text-gray-400">
-                              No spam. You can unsubscribe at any time.
-                           </p>
-                        </form>
+                        />
                      </div>
                   </div>
                </div>
