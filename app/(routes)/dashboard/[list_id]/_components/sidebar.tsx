@@ -17,6 +17,10 @@ function Sidebar({ listId }: SidebarProps) {
          href: `/dashboard/${listId}`,
       },
       {
+         label: "Send emails",
+         href: `/dashboard/${listId}/send-emails`,
+      },
+      {
          label: "API endpoints",
          href: `/dashboard/${listId}/endpoints`,
       },
