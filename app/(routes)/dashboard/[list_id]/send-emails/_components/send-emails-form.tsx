@@ -17,19 +17,14 @@ function FormFields() {
             <Label>Title</Label>
             <Input
                placeholder="Example name"
-               name="listName"
+               name="listId"
                disabled={pending}
                defaultValue={""}
             />
          </div>
          <div>
-            <Label>Description</Label>
-            <Input
-               id="profilePicture"
-               type="file"
-               accept="html/*"
-               disabled={pending}
-            />
+            <Label>Email Template</Label>
+            <Input type="file" accept="html" disabled={pending} name="html" />
          </div>
          <Button disabled={pending} type="submit">
             Send Emails
@@ -38,9 +33,12 @@ function FormFields() {
    )
 }
 
-function SendEmailsForm() {
+function SendEmailsForm({ listId }: { listId: string }) {
    const initialState = {
       error: "",
+      title: "",
+      file: "",
+      html: "",
    }
    const [state, formAction] = useFormState(sendEmails, initialState)
 
@@ -56,6 +54,7 @@ function SendEmailsForm() {
                <AlertDescription>{state?.error}</AlertDescription>
             </Alert>
          )}
+         <input name="listId" value={listId} className="hidden" />
          <FormFields />
       </form>
    )

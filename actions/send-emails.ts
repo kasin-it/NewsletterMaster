@@ -6,15 +6,33 @@ import { createServerClient } from "@supabase/ssr"
 import { z } from "zod"
 
 const schema = z.object({
-   email: z.string().email(),
+   title: z.string().email(),
+   listId: z.string().uuid(),
+   html: z
+      .instanceof(File)
+      .refine((file) => file.type === "text/html", {
+         message: "Only HTML files are allowed.",
+      })
+      .refine((file) => file.name.endsWith(".html"), {
+         message: 'Please ensure the file extension is ".html".',
+      })
+      .refine((file) => file.size <= 5000000, `Max file size is 5MB.`),
 })
 
 export async function sendEmails(prevState: any, formData: FormData) {
-   const email = formData.get("email")
+   const title = formData.get("title")
+   const listId = formData.get("listId")
+   const html = formData.get("html")
 
    const validatedFields = schema.safeParse({
-      email,
+      title,
+      listId,
+      html,
    })
+
+   console.log(title)
+   console.log(listId)
+   console.log(html)
 
    if (!validatedFields.success) {
       return {
@@ -22,30 +40,7 @@ export async function sendEmails(prevState: any, formData: FormData) {
       }
    }
 
-   const cookieStore = cookies()
-
-   const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-         cookies: {
-            get(name: string) {
-               return cookieStore.get(name)?.value
-            },
-         },
-      }
-   )
-
-   const { error } = await supabase.auth.updateUser({
-      // @ts-ignore
-      email: email,
-   })
-
-   if (error != null) {
-      return {
-         error: "Something went wrong, try again later",
-      }
+   return {
+      message: "Emails has been sent!",
    }
-
-   revalidatePath("/dashboard/account")
 }

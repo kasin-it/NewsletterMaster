@@ -1,6 +1,8 @@
 import { Separator } from "@/components/ui/separator"
 
-function SendEmails() {
+import SendEmailsForm from "./_components/send-emails-form"
+
+function SendEmails({ params: { list_id } }: { params: { list_id: string } }) {
    return (
       <main className="flex flex-col gap-5 pb-5">
          <div className="flex flex-col gap-1">
@@ -11,6 +13,7 @@ function SendEmails() {
             </p>
          </div>
          <Separator />
+         <SendEmailsForm listId={list_id} />
       </main>
    )
 }
