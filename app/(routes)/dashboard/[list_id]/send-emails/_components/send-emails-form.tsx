@@ -17,7 +17,7 @@ function FormFields() {
             <Label>Title</Label>
             <Input
                placeholder="Example name"
-               name="listId"
+               name="title"
                disabled={pending}
                defaultValue={""}
             />
@@ -37,6 +37,7 @@ function SendEmailsForm({ listId }: { listId: string }) {
    const initialState = {
       error: "",
       title: "",
+      listId: "",
       file: "",
       html: "",
    }

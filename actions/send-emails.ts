@@ -1,12 +1,13 @@
 "use server"
 
+import { readFileSync } from "fs"
 import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 import { createServerClient } from "@supabase/ssr"
 import { z } from "zod"
 
 const schema = z.object({
-   title: z.string().email(),
+   title: z.string(),
    listId: z.string().uuid(),
    html: z
       .instanceof(File)
@@ -22,7 +23,9 @@ const schema = z.object({
 export async function sendEmails(prevState: any, formData: FormData) {
    const title = formData.get("title")
    const listId = formData.get("listId")
-   const html = formData.get("html")
+   const html = formData.get("html") as File
+
+   const arrayBuffer = await html.arrayBuffer()
 
    const validatedFields = schema.safeParse({
       title,
@@ -30,9 +33,7 @@ export async function sendEmails(prevState: any, formData: FormData) {
       html,
    })
 
-   console.log(title)
-   console.log(listId)
-   console.log(html)
+   console.log(arrayBuffer.toString())
 
    if (!validatedFields.success) {
       return {
