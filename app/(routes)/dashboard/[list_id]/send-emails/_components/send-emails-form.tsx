@@ -1,7 +1,7 @@
 "use client"
 
 import { sendEmails } from "@/actions/send-emails"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, Info } from "lucide-react"
 import { useFormState, useFormStatus } from "react-dom"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -38,7 +38,6 @@ function SendEmailsForm({ listId }: { listId: string }) {
       error: "",
       title: "",
       listId: "",
-      file: "",
       html: "",
    }
    const [state, formAction] = useFormState(sendEmails, initialState)
@@ -55,6 +54,7 @@ function SendEmailsForm({ listId }: { listId: string }) {
                <AlertDescription>{state?.error}</AlertDescription>
             </Alert>
          )}
+
          <input name="listId" value={listId} className="hidden" />
          <FormFields />
       </form>

@@ -1,9 +1,9 @@
 "use server"
 
-import { readFileSync } from "fs"
-import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
+import nodemailer from "nodemailer"
 import { z } from "zod"
 
 const schema = z.object({
@@ -25,23 +25,64 @@ export async function sendEmails(prevState: any, formData: FormData) {
    const listId = formData.get("listId")
    const html = formData.get("html") as File
 
-   const arrayBuffer = await html.arrayBuffer()
-
    const validatedFields = schema.safeParse({
       title,
       listId,
       html,
    })
 
-   console.log(arrayBuffer.toString())
-
    if (!validatedFields.success) {
       return {
          error: validatedFields.error.errors[0].message,
       }
    }
+   const cookieStore = cookies()
+   const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+         cookies: {
+            get(name: string) {
+               return cookieStore.get(name)?.value
+            },
+         },
+      }
+   )
 
-   return {
-      message: "Emails has been sent!",
+   const { data, error } = await supabase
+      .from("email_list_users")
+      .select("email")
+
+   if (error != null) {
+      return {
+         error: error.message,
+      }
    }
+
+   if (data.length == 0) {
+      return {
+         error: "You dont have any subscribers",
+      }
+   }
+
+   const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+         user: "YOUR-USERNAME",
+         pass: "THE-GENERATED-APP-PASSWORD",
+      },
+   })
+
+   data.forEach(async (user) => {
+      const result = await transporter.sendMail({
+         from: "noreply",
+         to: user.email,
+         subject: title,
+         text: html.text,
+      })
+   })
+
+   console.log(await html.text())
+
+   redirect("/dashboard/" + listId)
 }
