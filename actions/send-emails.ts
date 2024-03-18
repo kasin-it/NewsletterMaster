@@ -3,7 +3,6 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
-import nodemailer from "nodemailer"
 import { z } from "zod"
 
 const schema = z.object({
@@ -65,6 +64,7 @@ export async function sendEmails(prevState: any, formData: FormData) {
       }
    }
 
+   const nodemailer = require("nodemailer")
    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
