@@ -68,21 +68,21 @@ export async function sendEmails(prevState: any, formData: FormData) {
    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-         user: "YOUR-USERNAME",
-         pass: "THE-GENERATED-APP-PASSWORD",
+         user: process.env.EMAIL_ADDRESS,
+         pass: process.env.EMAIL_PASSWORD,
       },
    })
+
+   const htmlContent = await html.arrayBuffer()
 
    data.forEach(async (user) => {
       const result = await transporter.sendMail({
          from: "noreply",
          to: user.email,
          subject: title,
-         text: html.text,
+         text: new Uint8Array(htmlContent),
       })
    })
-
-   console.log(await html.text())
 
    redirect("/dashboard/" + listId)
 }
